@@ -1,61 +1,7 @@
 <template>
   <div class="container mt-5">
     
-    <div class="container">
-    <h2 class="mt-4 mb-4">Product Filters</h2>
-    <form class="mb-4">
-      <div class="row">
-        <div class="col-md-4 mb-3">
-          <input 
-            type="text" 
-            v-model="filters.store_name" 
-            @input="applyFilters" 
-            class="form-control" 
-            placeholder="Store Name" 
-          />
-        </div>
-        <div class="col-md-4 mb-3">
-          <input 
-            type="text" 
-            v-model="filters.category" 
-            @input="applyFilters" 
-            class="form-control" 
-            placeholder="Category" 
-          />
-        </div>
-        <div class="col-md-4 mb-3">
-          <input 
-            type="text" 
-            v-model="filters.vendor_name" 
-            @input="applyFilters" 
-            class="form-control" 
-            placeholder="Vendor Name" 
-          />
-        </div>
-      </div>
-      <div class="row">
-        
-        <div class="col-md-4 mb-3">
-          <input 
-            type="text" 
-            v-model="filters.item_number" 
-            @input="applyFilters" 
-            class="form-control" 
-            placeholder="Item Number" 
-          />
-        </div>
-        <div class="col-md-4 mb-3">
-          <input 
-            type="text" 
-            v-model="filters.name" 
-            @input="applyFilters" 
-            class="form-control" 
-            placeholder="Product Name" 
-          />
-        </div>
-      </div>
-    </form>
-    </div>
+   
     <h1 class="text-center mb-4">Product List</h1>
     <button @click="fetchData" class="btn btn-primary mb-3">Refresh Data</button>
     <div v-if="loading" class="alert alert-info">Loading...</div>
@@ -75,7 +21,7 @@
       <template v-slot:top>
         <v-text-field
           v-model="search"
-          label="Search products"
+          label="Search Category Item Desc Vendor Number Store Number Zip Code"
           clearable
           @input="filterProducts"
         ></v-text-field>
@@ -184,19 +130,7 @@ export default {
       }
 
   },
-  applyFilters() {
-      // console.log((this.filters.store_name);
-      this.filteredProducts = this.products.filter(product => {
-        return (
-          (this.filters.store_name ? product.store_name.toLowerCase().includes(this.filters.store_name.toLowerCase()) : true) &&
-          (this.filters.name ? product.name.toLowerCase().includes(this.filters.name.toLowerCase()) : true) &&
-          (this.filters.zip_code ? product.zip_code === this.filters.zip_code : true) &&
-          (this.filters.category ? product.category_name.toLowerCase().includes(this.filters.category.toLowerCase()) : true) &&
-          (this.filters.vendor_number ? product.vendor_number.toLowerCase().includes(this.filters.vendor_name.toLowerCase()) : true) &&
-          (this.filters.item_number ? product.item_number.toLowerCase().includes(this.filters.item_number.toLowerCase()) : true)
-        );
-      });
-    },
+ 
     filterProducts() {
       const searchTerm = this.search.toLowerCase();
       this.filteredProducts = this.products.filter(
@@ -205,7 +139,8 @@ export default {
           product.category?.toLowerCase().includes(searchTerm) ||
           product.vendor_number?.toLowerCase().includes(searchTerm) ||
           product.category?.toLowerCase().includes(searchTerm) ||
-          product.store_number?.toString().includes(searchTerm)
+          product.store_number?.toString().includes(searchTerm) ||
+          product.zip_code?.toString().includes(searchTerm)
       );
     },
 }
